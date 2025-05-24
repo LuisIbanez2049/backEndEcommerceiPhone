@@ -104,4 +104,8 @@ public class Product {
         this.category = category;
     }
     //----------------------------Métodos GETTER Y SETTER------------------------------------
+
+    public void addImg(String img){
+        imageLinks.add(img);
+    }
 }
