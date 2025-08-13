@@ -15,6 +15,7 @@ public class Client {
     private String name;
     private String email;
     private String number;
+    private String password;
 
 
     //-------------------Relacion entre client y order
@@ -28,10 +29,11 @@ public class Client {
     //-----------------------------------------Metodo Constructor-----------------------------------------
     public Client() { }
 
-    public Client(String name, String email, String number) {
+    public Client(String name, String email, String number, String password) {
         this.name = name;
         this.email = email;
         this.number = number;
+        this.password = password;
     }
     //-----------------------------------------Metodo Constructor-----------------------------------------
 
@@ -74,6 +76,14 @@ public class Client {
 
     public void setOrders(Set<CustomerOrder> customerOrders) {
         this.customerOrders = customerOrders;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     //----------------------------Métodos GETTER Y SETTER------------------------------------
 

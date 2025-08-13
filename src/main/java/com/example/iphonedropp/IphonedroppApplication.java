@@ -8,10 +8,12 @@ import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
 import com.example.iphonedropp.repository.OrderRepository;
 import com.example.iphonedropp.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -22,14 +24,16 @@ public class IphonedroppApplication {
 		SpringApplication.run(IphonedroppApplication.class, args);
 	}
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, OrderRepository orderRepository,
 									  ProductRepository productRepository, CategoryRepository categoryRepository){
 		return (args) -> {
 
 			//------------------------------------------------CREO A LOS CLIENTES------------------------------------------------
-			Client luis = new Client("Luis Ibañez", "luis@gmail.com", "1134343434");
-			Client anna = new Client("Anna Steve", "anna@gmail.com", "1132323232");
+			Client luis = new Client("Luis Ibañez", "luis@gmail.com", "1134343434", passwordEncoder.encode("123"));
+			Client anna = new Client("Anna Steve", "anna@gmail.com", "1132323232", passwordEncoder.encode("123"));
 
 			clientRepository.save(luis);
 			clientRepository.save(anna);
