@@ -16,6 +16,7 @@ public class Client {
     private String email;
     private String number;
     private String password;
+    private ClientRol clientRol;
 
 
     //-------------------Relacion entre client y order
@@ -84,6 +85,14 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ClientRol getClientRol() {
+        return clientRol;
+    }
+
+    public void setClientRol(ClientRol clientRol) {
+        this.clientRol = clientRol;
     }
     //----------------------------Métodos GETTER Y SETTER------------------------------------
 

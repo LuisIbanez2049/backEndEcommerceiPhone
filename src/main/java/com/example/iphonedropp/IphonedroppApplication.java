@@ -1,8 +1,6 @@
 package com.example.iphonedropp;
 
-import com.example.iphonedropp.models.Category;
-import com.example.iphonedropp.models.Client;
-import com.example.iphonedropp.models.Product;
+import com.example.iphonedropp.models.*;
 import com.example.iphonedropp.models.utils.GenerateOrderNumber;
 import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
@@ -35,16 +33,18 @@ public class IphonedroppApplication {
 			Client luis = new Client("Luis Ibañez", "luis@gmail.com", "1134343434", passwordEncoder.encode("123"));
 			Client anna = new Client("Anna Steve", "anna@gmail.com", "1132323232", passwordEncoder.encode("123"));
 
+			luis.setClientRol(ClientRol.ADMIN);
+			anna.setClientRol(ClientRol.CLIENT);
 			clientRepository.save(luis);
 			clientRepository.save(anna);
 			//------------------------------------------------CREO A LOS CLIENTES------------------------------------------------
 
 
 			//------------------------------------------------CREO LAS CATEGORIAS------------------------------------------------
-			Category macs = new Category("Mac", "https://res.cloudinary.com/dlyoighih/image/upload/v1747970561/mac_zo05nf.jpg");
-			Category iPhones = new Category("iPhone", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971805/iPhoneCategory_bmrkxf.jpg");
-			Category iPads = new Category("iPad", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/iPadCategory_z98mfx.jpg");
-			Category watches = new Category("Watch", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/watchCategory_wrdcne.jpg");
+			Category macs = new Category("Mac", "https://res.cloudinary.com/dlyoighih/image/upload/v1747970561/mac_zo05nf.jpg", SectionCategory.MINORISTA);
+			Category iPhones = new Category("iPhone", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971805/iPhoneCategory_bmrkxf.jpg", SectionCategory.MINORISTA);
+			Category iPads = new Category("iPad", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/iPadCategory_z98mfx.jpg", SectionCategory.MINORISTA);
+			Category watches = new Category("Watch", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/watchCategory_wrdcne.jpg", SectionCategory.MINORISTA);
 
 			categoryRepository.save(macs);
 			categoryRepository.save(iPhones);

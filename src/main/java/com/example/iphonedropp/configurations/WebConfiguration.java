@@ -39,8 +39,9 @@ public class WebConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 //.requestMatchers("/api/product/").hasRole("CLIENT")
-                                .requestMatchers("/api/product/").permitAll()
-                                .requestMatchers("/api/clients/","/api/clients/**","/api/clients/accounts/", "/api/clients/accounts/**", "/h2-console/**").hasRole("ADMIN")
+                                .requestMatchers("/api/product/", "/api/category/").permitAll()
+                                .requestMatchers("/api/clients/","/api/clients/**", "api/category/modificarCategoria",
+                                        "/api/clients/accounts/", "/api/clients/accounts/**", "/h2-console/**").hasRole("ADMIN")
                                 //.anyRequest().authenticated()
                                 .anyRequest().permitAll()
                 )

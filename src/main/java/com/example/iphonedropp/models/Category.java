@@ -11,8 +11,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private SectionCategory sectionCategory;
     private String name;
     private String img;
+    private boolean isActive = true;
 
 
     //-------------------Relacion entre category y product
@@ -24,9 +26,10 @@ public class Category {
     //-----------------------------------------Metodo Constructor-----------------------------------------
     public Category() { }
 
-    public Category(String name, String img) {
+    public Category(String name, String img, SectionCategory sectionCategory) {
         this.name = name;
         this.img = img;
+        this.sectionCategory = sectionCategory;
     }
     //-----------------------------------------Metodo Constructor-----------------------------------------
 
@@ -63,7 +66,24 @@ public class Category {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-//----------------------------Métodos GETTER Y SETTER------------------------------------
+
+    public SectionCategory getSectionCategory() {
+        return sectionCategory;
+    }
+
+    public void setSectionCategory(SectionCategory sectionCategory) {
+        this.sectionCategory = sectionCategory;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    //----------------------------Métodos GETTER Y SETTER------------------------------------
 
 
     public void addProduct(Product product){
