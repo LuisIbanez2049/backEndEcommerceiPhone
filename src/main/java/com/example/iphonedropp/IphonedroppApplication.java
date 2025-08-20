@@ -42,12 +42,12 @@ public class IphonedroppApplication {
 
 			//------------------------------------------------CREO LAS CATEGORIAS------------------------------------------------
 			Category macs = new Category("Mac", "https://res.cloudinary.com/dlyoighih/image/upload/v1747970561/mac_zo05nf.jpg", SectionCategory.MINORISTA);
-			Category iPhones = new Category("iPhone", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971805/iPhoneCategory_bmrkxf.jpg", SectionCategory.MINORISTA);
+			Category iPhones = new Category("iPhone", "https://res.cloudinary.com/dlyoighih/image/upload/v1755648272/16proMaxCategoria_vybima.jpg", SectionCategory.MINORISTA);
 			Category iPads = new Category("iPad", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/iPadCategory_z98mfx.jpg", SectionCategory.MINORISTA);
 			Category watches = new Category("Watch", "https://res.cloudinary.com/dlyoighih/image/upload/v1747971933/watchCategory_wrdcne.jpg", SectionCategory.MINORISTA);
 
-			categoryRepository.save(macs);
 			categoryRepository.save(iPhones);
+			categoryRepository.save(macs);
 			categoryRepository.save(iPads);
 			categoryRepository.save(watches);
 

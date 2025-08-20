@@ -1,5 +1,6 @@
 package com.example.iphonedropp.dtos;
 
+import com.example.iphonedropp.models.Category;
 import com.example.iphonedropp.models.Product;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public class ProductDTO {
     private String firstImage;
     private int cant;
     private List<String> imageLinks;
+    private String category;
+    private Long categoryId;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
@@ -19,6 +22,8 @@ public class ProductDTO {
         this.firstImage = product.getFirstImage();
         this.cant = product.getCant();
         this.imageLinks = product.getImageLinks();
+        this.category = product.getCategory().getName();
+        this.categoryId = product.getCategory().getId();
     }
 
     public Long getId() {
@@ -39,5 +44,13 @@ public class ProductDTO {
 
     public List<String> getImageLinks() {
         return imageLinks;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 }
