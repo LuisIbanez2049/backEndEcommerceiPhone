@@ -2,6 +2,7 @@ package com.example.iphonedropp.controllers;
 
 import com.example.iphonedropp.dtos.ProductDTO;
 import com.example.iphonedropp.dtos.records.RecordCreateProduct;
+import com.example.iphonedropp.dtos.records.RecordEditProduct;
 import com.example.iphonedropp.models.Category;
 import com.example.iphonedropp.models.Client;
 import com.example.iphonedropp.models.ClientRol;
@@ -71,6 +72,20 @@ public class ProductController {
 
             return new ResponseEntity<>("Producto creado exitosamente.", HttpStatus.CREATED);
 
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @PostMapping("/editProduct")
+    public ResponseEntity<?> editProduct(Authentication authentication, @RequestBody RecordEditProduct recordEditProduct){
+        try {
+            Product product = productRepository.findById(recordEditProduct.id()).orElse(null);
+            if (product == null) {
+                return  new ResponseEntity<>("Producto no encontrado con id: " + recordEditProduct.id(), HttpStatus.NOT_FOUND);
+            }
+
+            product.setImageLinks(recordEditProduct.links());
+            productRepository.save(product);
+            return new ResponseEntity<>("Producto actualizado.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 }
