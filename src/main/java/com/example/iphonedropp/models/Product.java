@@ -12,8 +12,12 @@ public class Product {
     private Long id;
 
     private String name;
-    private String firstImage;
     private int cant;
+    private double price;
+
+    @Lob
+    @Column(columnDefinition = "TEXT") // Para MySQL/PostgreSQL
+    private String description;
 
     @ElementCollection
     private List<String> imageLinks;
@@ -37,9 +41,8 @@ public class Product {
     //-----------------------------------------Metodo Constructor-----------------------------------------
     public Product() { }
 
-    public Product(String name, String firstImage, int cant, List<String> imageLinks) {
+    public Product(String name, int cant, List<String> imageLinks) {
         this.name = name;
-        this.firstImage = firstImage;
         this.cant = cant;
         this.imageLinks = imageLinks;
     }
@@ -64,13 +67,6 @@ public class Product {
         this.name = name;
     }
 
-    public String getFirstImage() {
-        return firstImage;
-    }
-
-    public void setFirstImage(String firstImage) {
-        this.firstImage = firstImage;
-    }
 
     public int getCant() {
         return cant;
@@ -102,6 +98,22 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     //----------------------------Métodos GETTER Y SETTER------------------------------------
 

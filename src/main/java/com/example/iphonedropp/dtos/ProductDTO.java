@@ -12,16 +12,20 @@ public class ProductDTO {
     private String name;
     private String firstImage;
     private int cant;
-    private List<String> imageLinks;
+    private double price;
+    private String description;
+    private List<String> fileLinks;
     private String category;
     private Long categoryId;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();
-        this.firstImage = product.getFirstImage();
+        this.firstImage = product.getImageLinks().stream().findFirst().orElse(null);
         this.cant = product.getCant();
-        this.imageLinks = product.getImageLinks();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
+        this.fileLinks = product.getImageLinks();
         this.category = product.getCategory().getName();
         this.categoryId = product.getCategory().getId();
     }
@@ -42,9 +46,6 @@ public class ProductDTO {
         return cant;
     }
 
-    public List<String> getImageLinks() {
-        return imageLinks;
-    }
 
     public String getCategory() {
         return category;
@@ -52,5 +53,17 @@ public class ProductDTO {
 
     public Long getCategoryId() {
         return categoryId;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getFileLinks() {
+        return fileLinks;
     }
 }

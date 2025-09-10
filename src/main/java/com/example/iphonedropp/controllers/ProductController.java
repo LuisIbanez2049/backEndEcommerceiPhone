@@ -61,7 +61,7 @@ public class ProductController {
                 return new ResponseEntity<>("No tienes permisos para realizar esta acción", HttpStatus.FORBIDDEN);
             }
 
-            Product newProduct = new Product(recordCreateProduct.name(), recordCreateProduct.firstImage(), recordCreateProduct.cant(), recordCreateProduct.imageLinks());
+            Product newProduct = new Product(recordCreateProduct.name(), recordCreateProduct.cant(), recordCreateProduct.imageLinks());
             Category category = categoryRepository.findById(recordCreateProduct.categoryId()).orElse(null);
             if (category == null) {
                 return new ResponseEntity<>("Categoria no encontrada", HttpStatus.NOT_FOUND);
