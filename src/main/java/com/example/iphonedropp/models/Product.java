@@ -12,7 +12,7 @@ public class Product {
     private Long id;
 
     private String name;
-    private int cant;
+    private int stock;
     private double price;
 
     @Lob
@@ -41,9 +41,9 @@ public class Product {
     //-----------------------------------------Metodo Constructor-----------------------------------------
     public Product() { }
 
-    public Product(String name, int cant, List<String> imageLinks) {
+    public Product(String name, int stock, List<String> imageLinks) {
         this.name = name;
-        this.cant = cant;
+        this.stock = stock;
         this.imageLinks = imageLinks;
     }
     //-----------------------------------------Metodo Constructor-----------------------------------------
@@ -68,12 +68,12 @@ public class Product {
     }
 
 
-    public int getCant() {
-        return cant;
+    public int getStock() {
+        return stock;
     }
 
-    public void setCant(int cant) {
-        this.cant = cant;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public List<String> getImageLinks() {

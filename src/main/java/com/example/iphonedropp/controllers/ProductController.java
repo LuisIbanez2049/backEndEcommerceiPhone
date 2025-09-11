@@ -53,7 +53,7 @@ public class ProductController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
-    @PostMapping("/createProduct")
+    @PostMapping("/create")
     public ResponseEntity<?> createNewProduct(Authentication authentication, @RequestBody RecordCreateProduct recordCreateProduct){
         try {
             Client client = clientRepository.findByEmail(authentication.getName());
@@ -61,7 +61,9 @@ public class ProductController {
                 return new ResponseEntity<>("No tienes permisos para realizar esta acción", HttpStatus.FORBIDDEN);
             }
 
-            Product newProduct = new Product(recordCreateProduct.name(), recordCreateProduct.cant(), recordCreateProduct.imageLinks());
+            Product newProduct = new Product(recordCreateProduct.name(), recordCreateProduct.stock(), recordCreateProduct.fileLinks());
+            newProduct.setPrice(recordCreateProduct.price());
+            newProduct.setDescription(recordCreateProduct.description());
             Category category = categoryRepository.findById(recordCreateProduct.categoryId()).orElse(null);
             if (category == null) {
                 return new ResponseEntity<>("Categoria no encontrada", HttpStatus.NOT_FOUND);
@@ -75,7 +77,7 @@ public class ProductController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
-    @PostMapping("/editProduct")
+    @PostMapping("/edit")
     public ResponseEntity<?> editProduct(Authentication authentication, @RequestBody RecordEditProduct recordEditProduct){
         try {
             Product product = productRepository.findById(recordEditProduct.id()).orElse(null);

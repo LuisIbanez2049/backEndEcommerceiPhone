@@ -11,7 +11,7 @@ public class ProductDTO {
 
     private String name;
     private String firstImage;
-    private int cant;
+    private int stock;
     private double price;
     private String description;
     private List<String> fileLinks;
@@ -22,7 +22,7 @@ public class ProductDTO {
         this.id = product.getId();
         this.name = product.getName();
         this.firstImage = product.getImageLinks().stream().findFirst().orElse(null);
-        this.cant = product.getCant();
+        this.stock = product.getStock();
         this.price = product.getPrice();
         this.description = product.getDescription();
         this.fileLinks = product.getImageLinks();
@@ -42,10 +42,9 @@ public class ProductDTO {
         return firstImage;
     }
 
-    public int getCant() {
-        return cant;
+    public int getStock() {
+        return stock;
     }
-
 
     public String getCategory() {
         return category;
