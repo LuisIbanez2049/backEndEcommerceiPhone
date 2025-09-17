@@ -61,6 +61,17 @@ public class ProductController {
                 return new ResponseEntity<>("No tienes permisos para realizar esta acción", HttpStatus.FORBIDDEN);
             }
 
+            if (recordCreateProduct.name().isBlank()) {
+                return new ResponseEntity<>("Por favor agrega el nombre del producto.", HttpStatus.BAD_REQUEST);
+            }
+            if (recordCreateProduct.fileLinks() == null || recordCreateProduct.fileLinks().isEmpty()) {
+                return new ResponseEntity<>("Por favor agrega al menos una imagen del producto.", HttpStatus.BAD_REQUEST);
+            }
+            if (recordCreateProduct.description().isBlank()) {
+                return new ResponseEntity<>("Por favor agrega la descripción del producto.", HttpStatus.BAD_REQUEST);
+            }
+
+
             Product newProduct = new Product(recordCreateProduct.name(), recordCreateProduct.stock(), recordCreateProduct.fileLinks());
             newProduct.setPrice(recordCreateProduct.price());
             newProduct.setDescription(recordCreateProduct.description());
