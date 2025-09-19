@@ -81,6 +81,7 @@ public class ProductController {
             }
             newProduct.setCategory(category);
             category.addProduct(newProduct);
+            categoryRepository.save(category);
             productRepository.save(newProduct);
 
             return new ResponseEntity<>("Producto creado exitosamente.", HttpStatus.CREATED);
@@ -91,13 +92,38 @@ public class ProductController {
     @PostMapping("/edit")
     public ResponseEntity<?> editProduct(Authentication authentication, @RequestBody RecordEditProduct recordEditProduct){
         try {
-            Product product = productRepository.findById(recordEditProduct.id()).orElse(null);
+            Product product = productRepository.findById(recordEditProduct.productId()).orElse(null);
             if (product == null) {
-                return  new ResponseEntity<>("Producto no encontrado con id: " + recordEditProduct.id(), HttpStatus.NOT_FOUND);
+                return  new ResponseEntity<>("Producto no encontrado con id: " + recordEditProduct.productId(), HttpStatus.NOT_FOUND);
+            }
+            if (!recordEditProduct.name().isEmpty()) {
+                product.setName(recordEditProduct.name());
+            }
+            if (!recordEditProduct.description().isEmpty()) {
+                product.setDescription(recordEditProduct.description());
+            }
+            if (recordEditProduct.price() != -1) {
+                product.setPrice(recordEditProduct.price());
+            }
+            if (!recordEditProduct.fileLinks().isEmpty()) {
+                product.setImageLinks(recordEditProduct.fileLinks());
+            }
+            if (recordEditProduct.stock() != -1) {
+                product.setStock(recordEditProduct.stock());
             }
 
-            product.setImageLinks(recordEditProduct.links());
+            if (recordEditProduct.categoryId() != -1) {
+                Category category = categoryRepository.findById(recordEditProduct.categoryId()).orElse(null);
+                if (category == null) {
+                    return new ResponseEntity<>("Categoria no encontrada", HttpStatus.NOT_FOUND);
+                }
+                product.setCategory(category);
+                category.addProduct(product);
+                categoryRepository.save(category);
+            }
             productRepository.save(product);
+
+
             return new ResponseEntity<>("Producto actualizado.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
