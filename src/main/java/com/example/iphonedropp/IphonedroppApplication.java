@@ -126,7 +126,7 @@ public class IphonedroppApplication {
 			Product watchUltra = new Product("Apple Watch Ultra", 3,
 					Arrays.asList("https://res.cloudinary.com/dlyoighih/image/upload/v1748106719/watchUltra1_yugkfb.jpg","https://res.cloudinary.com/dlyoighih/image/upload/v1748106720/watchUltra2_fdhlkd.png"));
 			watchUltra.setPrice(435);
-			watchUltra.setDescription("Ultra");
+			watchUltra.setDescription("<p>Ultra</p>");
 			watchUltra.setCategory(watches);
 			watches.addProduct(watchUltra);
 			productRepository.save(watchUltra);

@@ -3,10 +3,7 @@ package com.example.iphonedropp.controllers;
 import com.example.iphonedropp.dtos.ProductDTO;
 import com.example.iphonedropp.dtos.records.RecordCreateProduct;
 import com.example.iphonedropp.dtos.records.RecordEditProduct;
-import com.example.iphonedropp.models.Category;
-import com.example.iphonedropp.models.Client;
-import com.example.iphonedropp.models.ClientRol;
-import com.example.iphonedropp.models.Product;
+import com.example.iphonedropp.models.*;
 import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
 import com.example.iphonedropp.repository.ProductRepository;
@@ -38,6 +35,34 @@ public class ProductController {
             if (productDTOS == null) {
                 return new ResponseEntity<>("There aren´t products yet.", HttpStatus.NO_CONTENT);
             }
+            return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @GetMapping("/minorista")
+    public ResponseEntity<?> getAllProductMinorista(){
+        try {
+            List<ProductDTO> productDTOS = productRepository.findAll().stream()
+                    .filter(product -> product.getCategory().getSectionCategory().equals(SectionCategory.MINORISTA))
+                    .map(product -> new ProductDTO(product)).collect(Collectors.toList());
+            if (productDTOS == null) {
+                return new ResponseEntity<>("No se encontraron productos minoristas", HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @GetMapping("/mayorista")
+    public ResponseEntity<?> getAllProductMayorista(){
+        try {
+            List<ProductDTO> productDTOS = productRepository.findAll().stream()
+                    .filter(product -> product.getCategory().getSectionCategory().equals(SectionCategory.MAYORISTA))
+                    .map(product -> new ProductDTO(product)).collect(Collectors.toList());
+            if (productDTOS.isEmpty()) {
+                return new ResponseEntity<>("No se encontraron productos mayoristas", HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(productDTOS, HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
@@ -92,6 +117,10 @@ public class ProductController {
     @PostMapping("/edit")
     public ResponseEntity<?> editProduct(Authentication authentication, @RequestBody RecordEditProduct recordEditProduct){
         try {
+            Client client = clientRepository.findByEmail(authentication.getName());
+            if (client == null) {
+                return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.FORBIDDEN);
+            }
             Product product = productRepository.findById(recordEditProduct.productId()).orElse(null);
             if (product == null) {
                 return  new ResponseEntity<>("Producto no encontrado con id: " + recordEditProduct.productId(), HttpStatus.NOT_FOUND);
