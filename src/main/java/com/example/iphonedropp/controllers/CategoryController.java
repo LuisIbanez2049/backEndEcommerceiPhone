@@ -1,8 +1,10 @@
 package com.example.iphonedropp.controllers;
 
 import com.example.iphonedropp.dtos.CategoryDTO;
+import com.example.iphonedropp.dtos.records.RecordCreateCategory;
 import com.example.iphonedropp.dtos.records.RecordModificarCategoria;
 import com.example.iphonedropp.models.Category;
+import com.example.iphonedropp.models.Client;
 import com.example.iphonedropp.models.SectionCategory;
 import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
@@ -48,6 +50,39 @@ public class CategoryController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> createCategory(Authentication authentication, @RequestBody RecordCreateCategory recordCreateCategory){
+        try {
+            Client client = clientRepository.findByEmail(authentication.getName());
+            if (client == null) {
+                return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
+            }
+
+            if (recordCreateCategory.name().isEmpty()) {
+                return new ResponseEntity<>("Es necesario agregar un nombre", HttpStatus.BAD_REQUEST);
+            }
+            if (recordCreateCategory.tipeCategory().isEmpty()) {
+                return new ResponseEntity<>("Es necesario agregar el tipo de categoria", HttpStatus.BAD_REQUEST);
+            }
+
+            if (recordCreateCategory.image().isEmpty()) {
+                return new ResponseEntity<>("Es necesario agregar una imagen", HttpStatus.BAD_REQUEST);
+            }
+            SectionCategory sectionCategory = SectionCategory.MINORISTA;
+            if (recordCreateCategory.tipeCategory().equals("Mayorista")) {
+                sectionCategory = SectionCategory.MAYORISTA;
+            }
+
+
+            Category newCategory = new Category(recordCreateCategory.name(), recordCreateCategory.image(), sectionCategory);
+
+            categoryRepository.save(newCategory);
+            return new ResponseEntity<>("Categoria creada con éxito.", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+
+
     @PatchMapping("/modificarCategoria")
     public ResponseEntity<?> modifiyCategory(Authentication authentication, @RequestBody RecordModificarCategoria recordModificarCategoria){
         try {
@@ -70,6 +105,8 @@ public class CategoryController {
             return new ResponseEntity<>("Categoria modificado con éxito.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
+
+
 
 
 }
