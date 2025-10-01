@@ -70,7 +70,7 @@ public class IphonedroppApplication {
 					Arrays.asList("https://res.cloudinary.com/dlyoighih/image/upload/v1748105605/iMac_n90y4j.jpg","https://res.cloudinary.com/dlyoighih/image/upload/v1748105606/iMac1_shxm4q.png"));
 
 			iMac.setPrice(234.55);
-			iMac.setDescription("<p className='font-bolt underline' >tu mama</p>");
+			iMac.setDescription("<p>tu mama</p>");
 			iMac.setCategory(macs);
 			macs.addProduct(iMac);
 			productRepository.save(iMac);
