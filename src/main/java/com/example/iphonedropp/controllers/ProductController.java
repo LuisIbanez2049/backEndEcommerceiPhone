@@ -156,4 +156,21 @@ public class ProductController {
             return new ResponseEntity<>("Producto actualizado.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProduct(Authentication authentication, @PathVariable Long id){
+        try {
+            Client client = clientRepository.findByEmail(authentication.getName());
+            Product product = productRepository.findById(id).orElse(null);
+            if (client == null) {
+                return new ResponseEntity<>("Cliente no encontrado para realizar esta acción", HttpStatus.FORBIDDEN);
+            }
+            if (product == null) {
+                return new ResponseEntity<>("Producto no encontrado con la id: " + id, HttpStatus.NOT_FOUND);
+            }
+
+            productRepository.deleteById(id);
+            return new ResponseEntity<>("Producto elimnado correctamente.", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
 }
