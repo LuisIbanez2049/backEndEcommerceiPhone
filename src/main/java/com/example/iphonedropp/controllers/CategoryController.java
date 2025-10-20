@@ -5,9 +5,11 @@ import com.example.iphonedropp.dtos.records.RecordCreateCategory;
 import com.example.iphonedropp.dtos.records.RecordModificarCategoria;
 import com.example.iphonedropp.models.Category;
 import com.example.iphonedropp.models.Client;
+import com.example.iphonedropp.models.Product;
 import com.example.iphonedropp.models.SectionCategory;
 import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
+import com.example.iphonedropp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class CategoryController {
 
     @Autowired
     ClientRepository clientRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllCategories(){
@@ -83,9 +88,13 @@ public class CategoryController {
 
 
 
-    @PatchMapping("/modificarCategoria")
+    @PatchMapping("/modificar")
     public ResponseEntity<?> modifiyCategory(Authentication authentication, @RequestBody RecordModificarCategoria recordModificarCategoria){
         try {
+            Client client = clientRepository.findByEmail(authentication.getName());
+            if (client == null) {
+                return new ResponseEntity<>("Cliente no encontrado", HttpStatus.FORBIDDEN);
+            }
             Category category = categoryRepository.findById(recordModificarCategoria.categoryId()).orElse(null);
             if (category == null) {
                 return new ResponseEntity<>("Categoria no encontrada con id: " + recordModificarCategoria.categoryId(), HttpStatus.NOT_FOUND);
@@ -103,6 +112,24 @@ public class CategoryController {
 
             categoryRepository.save(category);
             return new ResponseEntity<>("Categoria modificado con éxito.", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCategory(Authentication authentication, @PathVariable Long id){
+        try {
+            Client client = clientRepository.findByEmail(authentication.getName());
+            Category category = categoryRepository.findById(id).orElse(null);
+            if (client == null) {
+                return new ResponseEntity<>("Cliente no encontrado para realizar esta acción", HttpStatus.FORBIDDEN);
+            }
+            if (category == null) {
+                return new ResponseEntity<>("Categoria no encontrada con la id: " + id, HttpStatus.NOT_FOUND);
+            }
+
+            productRepository.deleteAll(category.getProducts());
+            categoryRepository.delete(category);
+            return new ResponseEntity<>("Categoria elimnada correctamente.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
