@@ -39,11 +39,14 @@ public class WebConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 //.requestMatchers("/api/product/").hasRole("CLIENT")
-                                .requestMatchers("/api/product/", "/api/category/").permitAll()
-                                .requestMatchers("/api/clients/","/api/clients/**", "api/category/modificarCategoria",
-                                        "/api/clients/accounts/", "/api/clients/accounts/**", "/h2-console/**").hasRole("ADMIN")
-                                //.anyRequest().authenticated()
-                                .anyRequest().permitAll()
+                                .requestMatchers("/api/product/","/api/product/**","/api/product/minorista","/api/product/mayorista", "/api/category/", "/api/auth/login", "/api/auth/register",
+                                        "/api/category/**").permitAll()
+                                .requestMatchers("/api/clients/","/api/clients/**", "api/category/modificar",
+                                        "/api/clients/accounts/", "/api/clients/accounts/**", "/h2-console/**","/api/auth/current","/api/category/create",
+                                        "/api/product/create", "/api/product/edit","/api/product/delete/**","/api/category/delete/**","api/client/",
+                                        "api/client/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                                //.anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
