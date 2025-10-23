@@ -19,6 +19,13 @@ import java.util.Arrays;
 public class IphonedroppApplication {
 
 	public static void main(String[] args) {
+		// 🔹 Cargar las variables del archivo .env antes de iniciar Spring
+		io.github.cdimascio.dotenv.Dotenv dotenv = io.github.cdimascio.dotenv.Dotenv.load();
+		System.setProperty("DB_URL", dotenv.get("DB_URL"));
+		System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
+		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+
+		// 🔹 Ahora sí, iniciar la app
 		SpringApplication.run(IphonedroppApplication.class, args);
 	}
 
