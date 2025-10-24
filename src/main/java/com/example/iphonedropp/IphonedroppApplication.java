@@ -6,7 +6,6 @@ import com.example.iphonedropp.repository.CategoryRepository;
 import com.example.iphonedropp.repository.ClientRepository;
 import com.example.iphonedropp.repository.OrderRepository;
 import com.example.iphonedropp.repository.ProductRepository;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,19 +19,13 @@ import java.util.Arrays;
 public class IphonedroppApplication {
 
 	public static void main(String[] args) {
-		// ⚙️ Solo cargar .env localmente (no en Render)
-		String environment = System.getenv("ENVIRONMENT");
+		// 🔹 Cargar las variables del archivo .env antes de iniciar Spring
+//		io.github.cdimascio.dotenv.Dotenv dotenv = io.github.cdimascio.dotenv.Dotenv.load();
+//		System.setProperty("DB_URL", dotenv.get("DB_URL"));
+//		System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
+//		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 
-		if (environment == null || !"production".equalsIgnoreCase(environment)) {
-			// ✅ Ignora error si el archivo .env no existe
-			Dotenv dotenv = Dotenv.configure()
-					.ignoreIfMissing()
-					.load();
-			System.out.println("🔹 Archivo .env cargado correctamente (modo local)");
-		} else {
-			System.out.println("🚀 Modo producción detectado (Render) — no se carga .env");
-		}
-
+		// 🔹 Ahora sí, iniciar la app
 		SpringApplication.run(IphonedroppApplication.class, args);
 	}
 
