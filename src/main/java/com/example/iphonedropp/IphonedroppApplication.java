@@ -51,13 +51,13 @@ public class IphonedroppApplication {
 		return (args) -> {
 
 			//------------------------------------------------CREO A LOS CLIENTES------------------------------------------------
-			Client luis = new Client("Luis Ibañez", "luis@gmail.com", "1134343434", passwordEncoder.encode("123"));
-			Client anna = new Client("Anna Steve", "anna@gmail.com", "1132323232", passwordEncoder.encode("123"));
-
-			luis.setClientRol(ClientRol.ADMIN);
-			anna.setClientRol(ClientRol.CLIENT);
-			clientRepository.save(luis);
-			clientRepository.save(anna);
+//			Client luis = new Client("Luis Ibañez", "luis@gmail.com", "1134343434", passwordEncoder.encode("123"));
+//			Client anna = new Client("Anna Steve", "anna@gmail.com", "1132323232", passwordEncoder.encode("123"));
+//
+//			luis.setClientRol(ClientRol.ADMIN);
+//			anna.setClientRol(ClientRol.CLIENT);
+//			clientRepository.save(luis);
+//			clientRepository.save(anna);
 			//------------------------------------------------CREO A LOS CLIENTES------------------------------------------------
 
 
